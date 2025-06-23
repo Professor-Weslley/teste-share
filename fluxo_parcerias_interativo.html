@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Fluxo Interativo de Parcerias – CGDADOS</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f4f8fb; }
+    h1 { color: #003366; }
+    select, button { margin-top: 10px; padding: 8px; font-size: 14px; }
+    .caixa { background: white; border-radius: 8px; padding: 20px; box-shadow: 0 0 10px #ccc; max-width: 600px; margin: auto; }
+    .resultado { margin-top: 20px; background: #e8f1fa; padding: 15px; border-left: 5px solid #003366; }
+  </style>
+</head>
+<body>
+  <div class="caixa">
+    <h1>Fluxo Interativo de Parcerias – CGDADOS</h1>
+    <label for="servico">1. Qual serviço deseja contratar?</label><br>
+    <select id="servico">
+      <option value="">-- Selecione --</option>
+      <option value="arp">Acesso a Dados (via ARP)</option>
+      <option value="analise">Análise de Dados</option>
+      <option value="visualizacao">Produto InfoGov (painel, datastory...)</option>
+    </select><br>
+
+    <label for="instituicao">2. Qual o tipo da instituição interessada?</label><br>
+    <select id="instituicao">
+      <option value="">-- Selecione --</option>
+      <option value="federal">Órgão público federal</option>
+      <option value="subnacional">Órgão estadual, municipal ou externo</option>
+    </select><br>
+
+    <button onclick="mostrarResultado()">Ver recomendação</button>
+
+    <div class="resultado" id="resultado"></div>
+  </div>
+
+  <script>
+    function mostrarResultado() {
+      const servico = document.getElementById('servico').value;
+      const tipo = document.getElementById('instituicao').value;
+      const resultado = document.getElementById('resultado');
+      let saida = '';
+
+      if (!servico || !tipo) {
+        saida = 'Por favor, selecione todas as opções.';
+      } else {
+        if (servico === 'arp') {
+          saida = '👉 Utilize o <strong>formulário institucional CODA</strong> para solicitar acesso ao ARP. É necessário termo de compromisso específico e análise prévia pela DAE/CGDADOS.';
+        } else if (tipo === 'federal') {
+          saida = '👉 Recomendamos firmar um <strong>TED</strong> (se houver repasse) ou <strong>ACT</strong> (sem repasse).';
+        } else {
+          saida = '👉 Para sua instituição, recomendamos <strong>GRU</strong> (pagamento direto) ou <strong>Acordo de Adesão</strong>.';
+        }
+
+        if (servico === 'analise') {
+          saida += '<br><br>💡 A CGDADOS pode entregar relatórios analíticos, predições ou relatórios de impacto.';
+        } else if (servico === 'visualizacao') {
+          saida += '<br><br>💡 A CGDADOS oferece visualizações como painéis, DataStories e InfoChats hospedados no InfoGOV.';
+        }
+      }
+      resultado.innerHTML = saida;
+    }
+  </script>
+</body>
+</html>
